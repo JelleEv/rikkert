@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+    <style>
+        body{
+            background-color:hotpink;
+        color:white;
+        }
+        .message{
+            display:none;
+            position : absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            margin:auto;
+            text-align: center;
+            height:100px;
+        }
+        .message-holder{
+            position : absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            margin:auto;
+        }
+        .img-joker{
+            display: none;
+            position: absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            margin: auto;
+        }
+        .packaging{
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius:100px;
+        }
+    </style>
+</head>
+<body>
+<div class="message-holder">
+    <h1 class="message message-1">Beste Rik,</h1>
+    <h1 class="message message-2">Jouw pakje is nog niet aangekomen :( . Al een week te laat nu.</h1>
+    <h1 class="message message-3">Maar hier kan je het alvast virtueel uitpakken.</h1>
+</div>
+<img class="img-joker" src="joker.jpg"/>
+<script>
+var messageCounter = 1;
+
+$(".message-1").fadeIn();
+$(".message-holder").on("click", function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    $messageToHide = $(".message-" + messageCounter);
+    messageCounter++;
+    $messageToShow = $(".message-" + messageCounter);
+    if($messageToShow.length){
+        $messageToHide.fadeOut(function(){
+            $messageToShow.fadeIn();
+        });
+    }else{
+        $(".message-holder").fadeOut(init);
+    }
+});
+function init(){
+    for(var i = 0; i < 800; i++)
+         createPackaging();
+
+    $(".img-joker").height(window.innerHeight).show();
+}
+function createPackaging(){
+    var $div = $("<div>");
+    $div.addClass("packaging");
+    var r = Math.ceil( 50 + Math.random() * 200);
+    var g = Math.ceil( 50 + Math.random() * 200);
+    var b = Math.ceil( 50 + Math.random() * 200);
+    $div.css("backgroundColor", "rgb(" + r +"," + g + "," + b + ")");
+    var left = Math.ceil(Math.random() * window.innerWidth);
+    var top = Math.ceil(Math.random() * window.innerHeight);
+    $div.css("top", -50 +top + "px");
+    $div.css("left", -50+left + "px");
+    var size = 50 + Math.ceil(Math.random() * 100);
+    $div.css("height", size + "px");
+    $div.css("width", size + "px");
+
+    $(document.body).append($div);
+    $div.on("mouseover", function(e){
+        e.stopPropagation();
+        $(this).fadeOut(function(){
+            $(this).remove();
+        });
+    })
+}
+
+</script>
+</body>
+</html>
